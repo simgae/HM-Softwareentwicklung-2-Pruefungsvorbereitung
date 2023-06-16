@@ -1,0 +1,754 @@
+10b. Pizzen, Pizze und Pizzas
+Das Interface Pizza repräsentiert ein Pizza. In dieser Aufgabe geht es um den
+Preis einer Pizza, der sich aus der Summe der Preise der Bestandteile ergibt,
+und um die Eigenschaften "vegetarisch" und "scharf".
+    public interface Pizza {
+        int getPrice(); // Preis in Cent
+        boolean isVegetable(); // Pizza ist vegetarisch?
+        boolean isHot(); // Pizza ist scharf?
+    }
+Eine Pizza besteht aus einem Pizzaboden (Klasse Bottom) und einer Auswahl
+von Auflagen (Klasse Topping).
+Definieren Sie die abstrakte Basisklasse Bottom für einen allgemeinen Pizzaboden.
+Bottom implementiert das Interface Pizza. Leiten Sie von Bottom die
+folgenden konkreten Klassen für bestimmte Pizzaböden ab:
+    Crusty, Grundpreis 3,40 C
+    Munchy, Grundpreis 3,95 C
+    CuscinoSpeciale, Grundpreis 4,95 C
+Jede Art von Pizzaboden trägt mit ihrem Grundpreis zum Gesamtpreis einer
+Pizza bei. Arbeiten Sie in dieser Aufgabe nur mit ganzen Cent-Beträgen. Alle
+Pizzaböden sind vegetarisch und keiner ist scharf. Verschieben Sie so viel
+Code wie möglich in die Basisklasse und minimieren Sie den Umfang der
+abgeleiteten Klassen.
+Formal gilt ein bloßer Pizzaboden als Pizza, auch wenn diese aus kulinarischer
+Sicht vielleicht nicht besonders attraktiv ist. Auf einen Pizzaboden
+können beliebig viele Auflagen gestapelt werden. Die Reihenfolge der Auflagen
+spielt hier keine Rolle.
+Die abstrakte Basisklasse Topping ist die Grundlage für alle Pizzaauflagen.
+Topping steht in zweifacher Beziehung zum Interface Pizza:
+Zumeinen braucht jede Auflage eine Pizza, auf der sie liegt. Entsprechend
+erwartet der Topping-Konstruktor ein Pizza-Objekt als Argument. Das ist
+die Pizza, auf der die Auflage liegt.
+Zum anderen ist eine Auflage samt allem, was darunterliegt, selbst eine
+Pizza. Deshalb implementiert Topping das Interface Pizza.
+Der folgende Rahmen zeigt diese Beziehungen:
+    public abstract class Topping implements Pizza { // Auflage mit allem darunter
+        private final Pizza below; // die Pizza darunter
+        ...
+    }
+Leiten Sie von Topping verschiedene konkrete Klassen für Auflagen ab.
+    Onions,0,65 C, vegetarisch, mild
+    Ham,2,45 C, nicht vegetarisch, mild
+    Salami,2,25 C, nicht vegetarisch, scharf
+    Chili,0,95 C, vegetarisch, scharf
+    Cheese,1,95 C, vegetarisch, mild
+Eine Pizza ist als Ganzes vegetarisch, wenn alle Auflagen vegetarisch sind.
+Sie ist scharf, wenn zwei oder mehr Auflagen scharf sind. Der Preis einer
+Pizza ergibt sich aus der Summe der Preise der einzelnen Bestandteile.
+Insgesamt ergibt sich folgende Struktur:
+[]
+------------------------------------------------------------------------------------------------
+10c. Elektrische Widerstände
+Widerstände sind elektrische Bauteile mit einem Widerstandswert, gemessen in Ohm.
+Aus Widerständen lassen sichWiderstandsnetze zusammensetzen.
+Dabei gelten die folgenden Konstruktionsregeln:
+Ein einzelner Widerstand ist ein "Netz", wenn auch ein sehr einfaches.
+Zwei Netze mit den Widerstandswerten R1 und R2 können in Serie, das
+heißt hintereinander, geschaltet werden. Die Kombination ist ein neues
+Netz mit dem Gesamtwiderstandswert
+    R = R1 + R2
+Zwei Netze mit den Widerstandswerten R1 und R2 können parallel, das
+heißt nebeneinander, geschaltet werden. Die Kombination ist ein neues
+Netz mit einem Gesamtwiderstandswert R, der bestimmt ist durch:
+    1/R = 1/R1 + 1/R2
+Implementieren Sie nun Klassen zur Repräsentation derartiger Schaltungen.
+Definieren Sie eine abstrakte Basisklasse Net für Widerstandsnetze mit
+der Methode
+    abstract double ohm();
+Leiten Sie von Net eine Klasse Resistor für einfache Widerstände ab. Der
+Widerstandswert ist unveränderlich.
+Definieren Sie zwei Klassen für serielle (Serial) und parallele (Parallel)
+Schaltungen von Netzen. Die Konstruktoren dieser Klassen erwarten je
+zwei Widerstandsnetze als Argumente und speichern diese.
+Schreiben Sie eine Anwendung, die das Netz in Abbildung 10.2 aufbaut
+und den Gesamtwiderstand ausgibt. DieWiderstände R1 bis R6 haben die
+Werte 100, 200,..., 600.
+[Abbildung 10.2: Widerstandsnetzwerk.]
+Die Basisklasse Net wird erweitert um die Definition:
+    // liefert die Anzahl der Widerstände im Netz
+    abstract int resistors();
+Der Ausdruck x.resistors() liefert beispielsweise das Ergebnis 6. Definieren
+Sie resistors() in allen Klassen.
+Als neue Sorte von Widerständen werden Potenziometer eingeführt.
+Potenziometer sind Bauteile mit einem regelbaren Widerstandswert. Leiten Sie von
+Net eine Klasse Potenziometer ab, die zusätzlich einen Setter
+setOhm für den Widerstandswert bietet.
+Ersetzen Sie in der oben skizzierten Schaltung den Widerstand R4 durch
+ein Potenziometer. Schreiben Sie eine neue Anwendung, die eine Liste
+der Widerstandswerte der modifizierten Schaltung ausgibt, wenn das
+Potenziometer in Schritten von 200 von 0 bis auf 5 k hochgeregelt
+wird.
+------------------------------------------------------------------------------------------------
+10d. Geteilte Strings
+Das Interface SplitString repräsentiert eine veränderliche Kombination von
+zwei Strings, wie zum Beispiel "Hello" und "World". Man kann einen
+SplitString auch als einzelnen String mit einer Trennstelle sehen: "Hello-
+World" mit dem Trenner vor dem Zeichen mit Index 5.
+Definieren Sie das Interface mit den folgenden Methoden. In den Beispielen
+ist die Trennstelle mit einem Komma markiert. In Wahrheit ist die Trennstelle
+allerdings eine logische Position und kein konkretes Zeichen.
+    Getter für den ersten und zweiten Teil-String sowie den Gesamt-String
+    und die Trennstelle. Beispiele für die vier Getter sind:
+        Hello,World => Hello
+        Hello,World => World
+        Hello,World => HelloWorld
+        Hello,World => 5
+    Methoden zum Verschieben des Trenners an den Anfang und an das Ende.
+        Beispiele:
+        Hello,World => HelloWorld,
+        Hello,World => ,HelloWorld
+    Methoden zum Verschieben des Trenners um eine Position nach vorne
+        und nach hinten. An den Enden bleibt der Trenner stehen. Beispiele:
+        Hello,World => Hell,oWorld
+        Hello,World => HelloW,orld
+    Methoden, um einen neuen String vor und hinter dem Trenner einzufügen. Beispiele:
+        Hello,World + Cruel => HelloCruel,World
+        Hello,World + Cruel => Hello,CruelWorld
+    Eine Methode zum Tauschen des ersten und zweiten Teil-Strings. Beispiele:
+        Hello,World => World,Hello
+    Methoden zum Löschen des Teil-Strings vor und nach dem Trenner. Der
+        Trenner steht anschließend am hinteren beziehungsweise am vorderen
+        Ende. Beispiele:
+        Hello,World => Hello,
+        Hello,World => ,World
+    Eine Methode zum Einfügen eines zweiten SplitString. Beispiel:
+        Hello,World + Anybody,Home => HelloAnybody,HomeWorld
+Überlegen Sie sich, welche dieser Methoden auf eine konkrete Implementierung
+angewiesen sind und welche nicht. Definieren Sie alle Methoden,
+die auf anderen Methoden beruhen, in einer abstrakten Basisklasse names
+AbstractSplitString.
+Definieren Sie zwei verschiedene konkreten Klassen, die beide von Abstract
+SplitString erben und die fehlenden Methoden implementieren. Eine der
+Klassen arbeitet mit dem Gesamt-String und dem Index der Trennstelle. Die
+andere verwaltet die beiden Teil-Strings getrennt.
+------------------------------------------------------------------------------------------------
+10e. Matrizen
+Eine Matrix ist eine Tabelle mit Zahlen (hier zur Vereinfachung nur ganze
+Zahlen), die in Spalten (columns) und Zeilen (rows) arrangiert sind. Die
+Anzahl Spalten und Zeilen nennt man das unveränderliche "Format" der
+Matrix. Ein Beispiel einer Matrix M mit dem Format 2 × 3:
+    1 2 3
+    4 5 6
+M(c, r) bezeichnet das Element in Spalte c und Zeile r (gezählt ab 0 =
+linke Spalte beziehungsweise obere Zeile). Beispielsweise ist M(0, 1) = 4.
+Definieren Sie eine abstrakte Basisklasse Matrix. Der Konstruktor akzeptiert
+das Format der Matrix. Zwei Auskunftsmethoden columns und rows
+liefern das Format der Matrix. Beispielsweise ergibt
+    m.columns()  => 3
+und
+    m.rows()  => 2
+Eine abstrakte Methode get gibt das Element (c, r) zurück. Beispielsweise
+ist
+    m.get(0, 1)  => 4
+Eine weitere abstrakte Methode set schreibt einen neuen Wert in das Element
+(c, r). Beispielsweise ersetzt der Aufruf m.set(0,1,9) die 4 durch 9.
+Definieren Sie eine abgeleitete, konkrete Klasse StdMatrix, die die Elemente
+in einem zweidimensionalen Array abspeichert.
+Manchmal sind Matrizen dünn besetzt, das heißt, die meisten Elemente
+sind 0. Definieren Sie eine abgeleitete, konkrete Klasse ThinMatrix, die nur
+die von 0 verschiedenen Elemente abspeichert. Für jedes Nicht-0-Element
+werden Spalte, Zeile und Wert aufgezeichnet. Im Konstruktor wird Platz
+für maximal (rows + columns) Nicht-0-Elemente bereitgestellt.
+Wenn eine ThinMatrix voll ist und noch ein weiteres Nicht-0-Element eingefügt
+werden soll, wird eine Exception ausgelöst.
+Die Methode print gibt eine Matrix aus. Beispielsweise gibt m.print() aus:
+    4 5 6
+Definieren Sie die Methode copy, die ein Duplikat einer existierenden
+Matrix produziert. Beispielsweise erhältman so ein zweites Exemplar von m:
+    Matrix copy = m.copy();
+Zwei Matrizen M und N können zu einer Summenmatrix A addiert werden. Dabei
+werden die Elemente von M und N paarweise addiert:
+    A(x, y) = M(x, y) + N(x, y) für alle x, y
+Zwei Matrizen können nur dann addiert werden, wenn sie das gleiche
+Format haben.
+Erweitern Sie die Klassen um Matrizenaddition, wobei die Summenmatrix als
+neues Objekt zurückgeliefert wird. Beispielsweise gibtm.add(m).
+add(m).print() aus:
+    3 6 9
+    12 15 18
+Zwei Matrizen M und N können zu einer Produktmatrix P multipliziert
+werden. Ein Element P(x, y) berechnet sich folgendermaßen:
+    P(x, y) = M(i, y)·N(x, i)
+Zwei Matrizen können nur dann multipliziert werden, wenn die Spaltenzahl von
+M gleich der Zeilenzahl von N ist. Erweitern Sie die Klassen
+um Matrizenmultiplikation, wobei die Produktmatrix als neues Objekt
+zurückgeliefert wird.
+------------------------------------------------------------------------------------------------
+10f. Textbilder
+Ein Textbild besteht aus einer Beschreibung dessen, was auf dem Bild zu
+sehen ist. Hier zum Beispiel ein Textbild von München im Winter:
+    München
+    im
+    Winter
+Definieren Sie ein Interface TextImage für Textbilder mit Gettern für die
+Höhe (height, Anzahl Zahlen, im Beispiel 3), die Breite (width, Länge
+der längsten Zeile, im Beispiel 7) und die Bildzeile mit einem gegebenen
+Index (line, die oberste Zeile hat den Index 0).
+Die Methode print gibt das Bild auf der Standardausgabe aus.
+Implementieren Sie das Interface TextImage in einer konkreten Klasse
+Classic. Der Classic-Konstruktor erhält eine Liste von Zeilen-Strings. Über
+das Interface hinaus definiert die Klasse Classic einen Setter für den Inhalt
+einer einzelnen Zeilemit gegebenem Index. Dabei kann sich die Breite des
+Bildes ändern. Die Höhe eines solchen Textbildes, das heißt die Anzahl
+der Zeilen, liegt aber fest und lässt sich nicht verändern. Im folgenden
+Codefragment entsteht das oben gezeigte Bild:
+    Classic mw = new Classic("Irgendwo", "im", "Winter");
+    mw.setLine(0, "München");
+Außer den eher klassischen Textbildern der Klasse Classic gibt es auch
+Textbilder moderner Kunstrichtung. Diese bestehen aus lauter gleichen
+Zeichen. Definieren Sie die Klasse Modern, deren Konstruktor ein Zeichen,
+die Breite und die Höhe des Bildes erhält. Hier entsteht zum Beispiel ein
+Monumentalgemälde von München im Schneesturm. Auf eine
+Abbildung dieses Werkes soll verzichtet werden.
+    Modern snow = new Modern('*', 8000000, 5000000);
+Moderne Textbilder erlauben das Verändern der Größe. Definieren Sie
+entsprechende Setter. Bringt man das oben geschaffene Werk auf eine
+überschaubare Größe
+    snow.setWidth(10);
+    snow.setHeight(5);
+so lässt es sich problemlos wiedergeben:
+    **********
+    **********
+    **********
+    **********
+    **********
+Sie werden bei der Implementierung von Classic und Modern gleiche oder
+sehr ähnliche Codefragmente definieren. Verlagern Sie diese Funktionalität
+in eine neue, gemeinsame abstrakte Basisklasse AbstractTextImage,die
+das Interface implementiert und von der die beiden konkreten Klassen
+Classic und Modern abgeleitet werden. Sie implementieren damit mittelbar
+das Interface. Die entsprechende implements-Angabe in den konkreten
+Klassen ist zulässig, aber unnötig.
+Definieren Sie Klasse Framed, die ein anderes Textbild mit den Zeichen
++, - und | einrahmt. Der Framed-Konstruktor erhält ein beliebiges, bereits
+existierendes Bild. Ein Framed-Objekt ist selbst ein Bild. Die Ausgabe von
+new Framed(mw) sieht zum Beispiel so aus:
+    +-------+
+    |München|
+    |im |
+    |Winter |
+    +-------+
+Ein Bild kann mehrmals eingerahmt werden, wie zum Beispiel in
+    new Framed(new Framed(new Framed(mw)))
+Definieren Sie zwei Klassen Besides und Above, die jeweils zwei vorhandene
+Bilder nebeneinander (oben bündig) beziehungsweise übereinander
+(linksbündig) zu einem neuen, größeren Bild arrangieren. Die Konstruktoren
+erhalten jeweils zwei Bilder mit beliebigen Formaten. Zum Beispiele
+ergibt new Besides(mw, snow) das folgende Textbild:
+    München**********
+    im     **********
+    Winter **********
+           **********
+           **********
+Und hier new Above(mw, snow):
+    München
+    im
+    Winter
+    **********
+    **********
+    **********
+    **********
+    **********
+Wie Sie sehen müssen die beiden arrangierten Einzelbilder nicht das gleiche
+Format haben. Gegebenenfalls wird die verbleibende Lücke mit Leerzeichen gefüllt.
+Definieren Sie die Klasse Tilt, die ein bereits vorhandenes Bild um 90°
+im Uhrzeigersinn dreht. Der Tilt-Konstruktor erhält ein vorhandenes Bild
+und liefert ein neues Bild. Das Bild new Tilt(mw) sieht folgendermaßen
+aus:
+    WiM
+    imü
+    nn
+    tc
+    eh
+    re
+    n
+Definieren Sie mithilfe von Tilt eine Klasse HeadOver, die einu m
+180° gedrehtes Bild repräsentiert. Hier zum Beispiel ein Abbild von
+new HeadOver(ms)
+    retniW
+    mi
+    nehcnüM
+Insgesamt ergibt sich folgende Struktur (Besides wie Above, Tilt und HeadOver
+wie Framed):
+------------------------------------------------------------------------------------------------
+10g. Zahlenfolgen
+Schreiben Sie ein Java-Programm, das Zahlenfolgen modelliert. Zur
+Vereinfachung werden nur Folgen ganzer Zahlen betrachtet.
+Definieren Sie eine abstrakte Basisklasse Sequence für allgemeine
+Zahlenfolgen. Sequence hat nur zwei Methoden:
+    hasNext gibt Auskunft, ob diese Folge noch weitere Elemente enthält
+        (true) oder nicht (false).
+    next liefert das nächste Element der Folge. Darf nur dann aufgerufen
+        werden, wenn hasNext das Ergebnis true geliefert hat.
+Die natürlichen Zahlen (1, 2, 3, . . . ) sind eine konkrete Zahlenfolge. Leiten
+Sie die Klasse Naturals von Sequence ab. Der erste Aufruf von next liefert
+1, der nächste 2,dann 3 und so weiter. hasNext liefert hier immer true.
+Die Klasse Range repräsentiert die natürlichen Zahlen in einem bestimmten
+Intervall. Der Konstruktor von Range erwartet zwei Argumente, den
+Anfang und das Ende des Intervalls. Der erste Parameter nennt die erste
+Zahl im Intervall, der zweite Parameter die erste Zahl hinter dem Intervall.
+Zum Beispiel enthält die Folge Range(5, 10) dieZahlen5,6,7,8und9,
+aber nicht mehr 10. Die Folge Range(5, 5) ist leer.
+Definieren Sie an passender Stelle eine Methode print, die bis zu 10 Elemente
+einer beliebigen Folge ausgibt. Wenn die Folge bloß 10 oder weniger Elemente
+hat, wird anschließend das Wort end ausgegeben, ansonsten "more".
+Ein "Filter" ist eine Zahlenfolge, die keine eigene Zahlenquelle enthält.
+Ein Filter "ernährt" sich stattdessen von einer anderen Zahlenfolge, deren
+Elemente er entweder durchlässt oder absorbiert. Welche Zahlen ein Filter
+passieren lässt, legen erst konkrete Filterklassen fest.
+Definieren Sie einen Typ Filter. Die Bedingung zum Schlucken oder
+Durchlassen von Zahlen bleibt hier noch offen, deshalb ist Filter keine
+konkrete Klasse.
+Definieren Sie den Filter Evens, der gerade Zahlen weitergibt und ungerade
+Zahlen entfernt. Zum Beispiel liefert
+    new Evens(new Naturals()) ==> 2, 4, 6, ...
+Welche Zahlen enthält die nächste Folge?
+    new Evens(new Range(5, 10)) ==> ?
+Definieren Sie einen Filter ZapMultiples. Dessen Konstruktor erwartet eine
+Basiszahl. Der Filter absorbiert alle ganzzahligen Vielfachen der Basiszahl
+und gibt den Rest weiter. Zum Beispiel ergibt
+    new ZapMultiples(new Naturals(), 3) ==> 1, 2, 4, 5, 7, 8, 10, ...
+Alle Vielfachen von 3 fehlen. Welche Zahlen erzeugt diese Folge?
+    new ZapMultiples(new Evens(new Range(5, 10)), 2) ==> ?
+Die nächste Folge hat ein Problem. Können Sie es ohne Hilfe eines Programms
+vorhersagen?
+    new ZapMultiples(new Evens(new Naturals()), 2)
+Das Sieb des Eratosthenes ist ein Algorithmus zur Berechnung von Primzahlen:
+1. Nimm die natürlichen Zahlen und entferne die 1.
+2. Gib die erste Zahl p desRestesaus. p ist eine Primzahl.
+3. Entferne p und alle Vielfachen aus der Folge.
+4. Zurück zu Schritt 2.
+Implementieren Sie das Sieb des Eratosthenes mit den vorher definierten
+Klassen.
+------------------------------------------------------------------------------------------------
+10h. Funktionen
+Eine mathematische Funktion f bildet eine Zahl x, den Parameter, auf eine
+neue Zahl f (x), den Funktionswert, ab. Aus der Sicht von Java kann das
+durch eine Methode mit dem Kopf
+    double map(double x)
+ausgedrückt werden.
+Definieren Sie eine abstrakte Basisklasse Function mit dieser Methode.
+Eine Parabel ist eine Funktion der Form f(x) = ax² + bx + c. Definieren
+SieeineKlasse Parabel, die von Function abgeleitet ist und deren Konstruktor
+a, b und c akzeptiert.
+Definieren Sie ebenso eine Klasse Hyperbel für Funktionen der Form
+f(x) = a/x.
+Eine Funktion kann in einer Wertetabelle grob dargestellt werden, die
+für eine Reihe von x-Werten in regelmäßigen Abständen jeweils den
+Funktionswert f (x) auflistet. Definieren Sie in der passenden Klasse eine
+Methode print, die drei Parameter akzeptiert (kleinster x-Wert, größter
+x-Wert, Abstand zwischen zwei x-Werten) und die eine derartige Wertetabelle
+ausdruckt.
+Zwei Funktionen f und g können verkettet werden. Die Verkettung ist
+eine neue Funktion h(x) = g(f (x)). Definieren Sie eine Klasse Composed,
+die von Function abgeleitet ist und im Konstruktor zwei andere Funktionen
+akzeptiert, deren Verkettung sie repräsentiert.
+Schreiben Sie eine Anwendung, die die Funktion [] erzeugt
+und deren Wertetabelle im Bereich -5 <= x <= +5 in Schritten von 1/10
+ausgibt.
+Die (punktweise mathematische) Ableitung einer Funktion kann approximiert
+werden durch []
+für ein hinreichend kleines d. Definieren Sie eine Klasse Derivation, die
+von Function (programmiersprachlich) abgeleitet ist und eine andere Funktion
+f im Konstruktor akzeptiert, deren (punktweise mathematische) Ableitung
+sie repräsentiert. Weiter akzeptiert der Konstruktor ein festes d als
+zweiten Parameter.
+Schreiben Sie eine weitere Anwendung, die eineWertetabelle der zweiten
+Ableitung von f (x) = 1/x2-2x+2
+im Bereich -5 <= x <= +5 in Schritten von 1/10 ausgibt.
+------------------------------------------------------------------------------------------------
+11a. Unzerstörbarer Bruchrechner
+Sichern Sie den Bruchrechner von Aufgabe 5a (Seite 205) mit Exceptions so
+ab, dass er jede Fehleingabe des Benutzers abfängt, eine passende Meldung
+ausgibt und dann weiterläuft. Der Bruchrechner darf keinesfalls abstürzen
+oder ohne das entsprechende Kommando beendet werden.
+------------------------------------------------------------------------------------------------
+11b. Sichere Eisenbahnzüge
+In Aufgabe 4f haben Sie Eisenbahnzüge modelliert. Verbessern
+Sie diese erste Lösung mit Assertions und Exceptions:
+Entscheiden Sie, welche Exceptionklassen benötigt werden.
+Suchen Sie nach Klassen-Invarianten und sichern Sie diese mit Assertions
+ab. Ein Beispiel: Jeder Zug enthält immer eine Lokomotive.
+Gehen Sie alle Methoden durch und prüfen Sie den zulässigen Wertebereich
+jedes Parameters. Fangen Sie alle unzulässigen Parameterwerte ab.
+Schreiben Sie ein Testprogramm, das gezielt Fehler provoziert und die
+korrekte Reaktion abprüft. Einige Beispiele:
+Aufruf des Train-Konstruktors mit null;
+Aufruf des Train-Konstruktors mit einer Lokomotive, an der schon Wagen
+hängen;
+Einhängen eines Wagens null mit add;
+Einhängen eines Wagens mit add, der bereits Teil dieses Zuges ist;
+Umhängen von Wagen mit relink mit demselben Zug als Parameter;
+Einhängen eines Wagens in zwei verschiedene Züge.
+------------------------------------------------------------------------------------------------
+12a. Effizienz von Listenoperationen
+Schreiben Sie ein Testprogramm, das die Effizienz von ArrayList und
+LinkedList gegenüberstellt. Vergleichen Sie folgende Operationen für ein
+hinreichend großes N, wie zum Beispiel 50000:
+Anfügen von N Elementen an das Ende;
+Einschieben von N Elementen am Anfang;
+sequenzieller Zugriff auf jedes der N Elemente über den Index;
+sequenzieller Zugriff auf jedes der N Elemente über einen Iterator;
+N-maliges Löschen des jeweils ersten Elementes über den Index;
+N-maliges Löschen des jeweils ersten Elementes über einen Iterator.
+Die Laufzeit eines Codefragmentes kann folgendermaßen bestimmt werden:
+    long start = System.currentTimeMillis();
+    /*
+    ... Code, dessen Laufzeit gemessen werden soll ...
+    */
+    System.out.println(System.currentTimeMillis() - start);
+------------------------------------------------------------------------------------------------
+12b. Netze
+Ein Netzwerk besteht aus Knoten, die mit Kanten verknüpft sind. Jeder Knoten
+hat einen Namen, der in einem String gespeichert ist. Kanten sind
+ungerichtet und verbinden jeweils genau zwei Knoten.
+Schreiben Sie eine Klasse Node, die einen Knoten eines Netzwerkes
+repräsentiert. Ein neuer, unverknüpfter Knoten wird mit dem Konstruktor
+    Node(String s)
+erzeugt. Der Getter getName liefert den Namen des Knotens zurück.
+Neben seinem Namen speichert jeder Knoten eine Liste seiner direkten
+Nachbarknoten. Definieren Sie zwei Methoden connect und disconnect,
+umeinen Knotenmit einemanderen zu verknüpfen beziehungsweise eine
+bestehende Verknüpfung zu lösen.
+Schreiben Sie eine Anwendung, die das in Abbildung 12.3 dargestellte
+Netz aufbaut.
+[Abbildung 12.3: Beispiel-Netz.]
+Definieren Sie ein Interface Visitor mit einer einzigen Methode
+    void process(Node n)
+Geben Sie der Klasse Node eine Methode
+    void visitAll(Visitor v)
+die jeden Knoten des Netzwerkes besucht und dabei die Methode process
+des übergebenen Visitor-Objektes v aufruft. Die Reihenfolge spielt keine
+Rolle, aber jeder Knoten muss genau einmal besucht werden.
+Definieren Sie eine Visitor-Implementierung Printer, die den Knotennamen
+ausgibt und erstellen Sie damit eine Knotenliste des Netzes von
+Abbildung 12.3.
+Definieren Sie eine andere Visitor-Implementierung Counter,diedie
+Anzahl der Knoten eines Netzwerkes ausgibt. Stellen Sie sicher, dass
+die Knotenanzahl für das Netz in Abbildung 12.3 korrekt berechnet wird.
+Schreiben Sie eine Methode isConnected, die für zwei beliebige Knoten
+feststellt, ob sie direkt oder indirekt verbunden sind.
+Prüfen Sie am Beispiel des Netzes von Abbildung 12.3, ob die Knoten a
+und g verbunden sind. Der Knoten e muss mit sich selbst verbunden sein.
+Entfernen Sie dann die Kante cf und testen Sie erneut die Verbindung
+von a und g.
+Hinweis: Ein Visitor leistet hier gute Dienste.
+------------------------------------------------------------------------------------------------
+12c. ZweidimensionaleMaps
+Die Maps im Package java.util bilden Elemente des Schlüsseltyps auf
+Elemente des Wertetyps ab. Zur Vereinfachung wird in dieser Aufgabe als
+Schlüssel- und Wertetyp nur String benutzt. Der Typ StringMap2 bildet
+jeweils zwei Schlüssel-Strings auf einen Wertestring ab. Er funktioniert wie
+eine Art "zweidimensionaler" Map, vergleichbar mit einem zweidimensionalen
+Array. Die Schlüssel-Strings werden im Folgenden als "Zeilen-" und
+"Spaltenschlüssel" bezeichnet, obwohl diese Bezeichnung technisch keine
+Bedeutung hat. Zum Beispiel könnte der Zeilenschlüssel ein Studentenname,
+der Spaltenschlüssel ein Prüfungsfach und der Wert eine Note sein:
+                        Raketenbau  Lyrik   Finanzmathematik
+    Daniel Düsentrieb   1.3         3.7
+    Micky Mouse                             5
+    Minnie Mouse                    1.7     -
+    Dagobert Duck       4.0                 1.0
+
+    Daniel Düsentrieb, Raketenbau => 1.3
+    Daniel Düsentrieb, Lyrik => 3.7
+    Micky Mouse, Finanzmathematik => 5
+    Minnie Mouse, Lyrik => 1.7
+    Minnie Mouse, Finanzmathematik => -
+    Dagobert Duck, Raketenbau => 4.0
+    Dagobert Duck, Finanzmathematik => 1.0
+Das Interface definiert die folgenden Methoden:
+    String put(String row, String column, String value) Fügt value in
+        Zeile row,
+        Spalte column ein. Wenn dort schon ein Wert stand, wird er
+        überschrieben. row und column dürfen null sein. Liefert den alten Wert an
+        dieser Position oder null, wenn dort noch keiner stand.
+    String get(String row, String col) Liefert den Wert in Zeile row, Spalte
+        column. Wenn dort kein Wert eingetragen ist, ist das Ergebnis null.
+    int size() Liefert die Anzahl der Einträge in der ganzen Datenstruktur.
+    int size(String row) Liefert die Anzahl der Einträge in Zeile row oder 0,
+        wenn die Zeile nicht existiert.
+    boolean contains(String row, String col) Gibt Auskunft, ob in Zeile row,
+        Spalte column ein Wert eingetragen ist (true) oder nicht (false).
+    SetString keySet() Liefert die Menge der Zeilenschlüssel.
+    SetString keySet(String row) Liefert die Menge der Spaltenschlüssel in
+        Zeile row oder null, wenn der Zeilenschlüssel nicht existiert.
+Definieren Sie das Interface und implementieren Sie es dann in der
+konkreten Klasse TrueStringMap2.
+------------------------------------------------------------------------------------------------
+12d. String-Iterator
+Definieren Sie eine Klasse StringChars, die die einzelnen Zeichen eines
+Strings in einer foreach-Schleife verfügbar macht. Das folgende
+Programmfragment zählt die kleinen Vokale in einem String:
+    int vowels = 0;
+    for(char c: new StringChars("Hello, world"))
+        if("aeiou".indexOf(c) >= 0)
+            vowels++;
+    System.out.println(vowels); // 3
+Beachten Sie, dass ein und dasselbe StringChars-Objekt von mehreren
+Iteratoren gleichzeitig durchlaufen werden kann. Die folgende Methode stellt
+fest, ob die Zeichen eines Strings alle nur einmal vorkommen:
+    boolean charsAreUnique(String s) {
+        StringChars chars = new StringChars(s);
+        for(char c0: chars) {
+            boolean me = false;
+            for(char c1: chars)
+                if(c0 == c1)
+                    if(me)
+                        return false;
+                    else
+                        me = true;
+        }
+        return true;
+    }
+------------------------------------------------------------------------------------------------
+12e. Collatz-Iterator
+Die Collatzfolge ist auf Seite 82 beschrieben. Definieren Sie eine Klasse
+Collatz, deren Konstruktor eine Startzahl als Argument erhält. Collatz-
+Objekte sollen mit foreach-Schleifen durchlaufen werden können und dabei
+nacheinander die Zahlen der Folge liefern. Eine 1 ist das letzte Element
+einer Collatzfolge. Das Codefragment
+    for(int i: new Collatz(6))
+        System.out.println(i);
+gibt aus
+    6, 3, 10, 5, 16, 8, 4, 2, 1
+Beachten Sie, dass mehrere Iteratoren gleichzeitig dasselbe Collatz-Objekt
+durchlaufen können.
+------------------------------------------------------------------------------------------------
+12f. Filetree Walker
+Das folgende Programm durchläuft einen Verzeichnisbaum und verarbeitet
+alle Dateien mit der Methode process, die in diesem Beispiel nur den Namen
+und die Dateilänge ausgibt.
+    import java.io.*;
+    class FileTreeWalker {
+        public static void main(String[ ] args) throws IOException {
+            new FileTreeWalker().walk(args[0]);
+        }
+        void walk(String pathname) throws IOException {
+            File[ ] files = new File(pathname).listFiles();
+            if(files != null)
+                for(File file: files)
+                    if(file.isDirectory())
+                        walk(file.getCanonicalPath());
+                    else
+                        process(file.getCanonicalPath(), (int)file.length());
+        }
+        void process(String name, int length) {
+            System.out.printf("%-70s%9d%n", name, length);
+        }
+    }
+Modifizieren Sie das Programm so, dass es die Dateien nach fallender
+Länge sortiert ausgibt.
+Erstellen Sie eine andere Variante des Programms, das "Duplikate" findet.
+Duplikate sind Dateien mit gleichen Namen in unterschiedlichen Verzeichnissen.
+Wahlweise sollen nur Duplikate mit gleicher Länge berücksichtigt werden.
+------------------------------------------------------------------------------------------------
+13a. Ringe
+Ein "Ring" ist eine Container-Datenstruktur, deren Elemente in einem Ring
+angeordnet sind. Ein Ring hat keinen Anfang und kein Ende, kein erstes und
+kein letztes Element.
+Ein bestimmtes Element des Rings ist jeweils das "aktuelle Element". Ein
+leerer Ring hat kein aktuelles Element. In einem Ring mit einem Element ist
+dieses automatisch das aktuelle Element.
+Definieren Sie eine generische Klasse Ring, deren Elementtyp eine
+Typvariable ist. Ring bietet die folgenden Methoden an:
+    Ring(int cap) Der Konstruktor erzeugt einen neuen Ring mit einer
+        Kapazität von cap Elementen. Zur Vereinfachung wird die Kapazität eines
+        Rings hier festgelegt und kann sich nicht mehr ändern. Speichern Sie
+        den Inhalt des Rings in einem Array. Der Ring ist noch leer, er enthält
+        keine Elemente. Die Methode wirft eine IllegalArgumentException,
+        wenn die Kapazität negativ ist.
+    int size() gibt Auskunft über die Anzahl der Elemente im Ring. Bei einem
+        neuen Ring ist das null. Die maximale Anzahl Elemente ist gleich
+        der Kapazität.
+    int capacity() gibt Auskunft über die Kapazität des Rings, wie sie im
+        Konstruktor angegeben wurde.
+    int add(T t) fügt das neue Element t links vom aktuellen Element ein.
+        Das aktuelle Element bleibt unverändert. Wirft eine IllegalArgument
+        Exception, wenn der Ring voll ist.
+    void back() macht den linken Nachbarn des aktuellen Elements zum neuen
+        aktuellen Element. Wirft eine NoSuchElementException, wenn der
+        Ring leer ist.
+    void remove() löscht das aktuelle Element aus dem Ring und macht das
+        Element rechts von der Lücke zum neuen aktuellen Element. Wirft eine
+    NoSuchElementException, wenn der Ring leer ist.
+    void set(T t) ersetzt das aktuelle Element durch t und macht den rechten
+        Nachbarn zum neuen aktuellen Element. Wirft eine NoSuchElement
+        Exception, wenn der Ring leer ist.
+    T get() liefert das aktuelle Element zurück und macht den rechten Nachbarn
+        zum neuen aktuellen Element. Wirft eine NoSuchElementException,
+        wenn der Ring leer ist.
+    public String toString() liefert eine lesbare Darstellung des Rings samt
+        Inhalt.
+Testen Sie die Ringklasse mit verschiedenen Typargumenten. Konstruieren
+Sie einen Ring mit 5 Ringen, die jeweils 5 Strings enthalten, und
+initialisieren Sie diese Ringe.
+Schreiben Sie eine Klasse Rings mit statischen Hilfsmethoden zum einfacheren
+Umgang mit Ringen. Definieren Sie die folgenden Methoden in Rings:
+    removeAll löscht alle Elemente aus einem Ring, die gleich einem gegebenen
+        Element x sind. Benutzen Sie equals zum Vergleich.
+        Der Typ von x muss mit dem Typ der Ringelemente nichts zu tun
+        haben.
+    removeLess löscht alle Elemente aus einem Ring, die kleiner als ein
+        gegebenes Element x sind. Benutzen Sie Comparable.compareTo zum
+        Größenvergleich.
+        Der Typ von x muss mit dem Typ der Ringelemente vergleichbar sein.
+    revert liefert einen neuen Ring, in dem die Elemente in der
+        entgegengesetzten Reihenfolge angeordnet sind wie im ursprünglichen Ring.
+    merge trennt zwei gegebene Ringe mit gleichem Elementtyp jeweils links
+        vom aktuellen Element auf und liefert einen neuen Ring, in dem die
+        Elemente der beiden ursprünglichen Ringe hintereinanderstehen.
+Setzen Sie Wildcardtypen ein, um die Methoden so flexibel wie möglich zu
+halten.
+------------------------------------------------------------------------------------------------
+13b. Paare
+Manche Methoden sollten zwei Werte als Ergebnis an den Aufrufer zurückliefern.
+Denken Sie beispielsweise an den Elementzugriff in einer Map mit
+der Methode get. Wenn kein Eintrag in der Map gefunden wird, liefert get
+den Fluchtwert null. Allerdings kann null auch der Wert eines regulären
+Eintrages sein. Um den Unterschied zu erkennen, muss noch die Methode
+containsKey aufgerufen werden.
+Alternativ könnte eine einzige Zugriffsmethode zwei Werte zusammen
+zurückliefern, ein Erfolgssignal und einen Wert (der nur bei einem positiven
+Erfolgssignal von Bedeutung ist). Allerdings können Methoden in Java
+nur einen Wert liefern.
+In diesem Fall ist eine unveränderliche Klasse Pair nützlich, die zwei Werte
+zusammenschnürt. Die Typen der beiden gebündelten Werte sind unabhängig,
+deshalb wird Pair eine generische Klasse mit zwei Typparametern T
+und U sein. Neben dem Konstruktor reichen zwei Getter und die Methoden
+toString, equals und hashCode aus.
+Definieren Sie die generische Klasse Pair.
+------------------------------------------------------------------------------------------------
+13c. ZweidimensionaleMaps, reloaded
+In einer früheren Aufgabe (Seite 401) wurde eine Map entwickelt, die zwei
+Strings auf einen dritten abbildet. Verallgemeinern Sie diese Lösung zu
+einem generischen Interface Map2. Implementierungen von Map2 bilden
+zwei Schlüssel beliebiger Typen T und U auf einen Wert eines dritten Typs
+V ab.
+Das Interface definiert die folgenden Methoden:
+    V put(T row, U column, V value) fügt value in Zeile row, Spalte column ein.
+        Wenn dort schon ein Wert stand, wird er überschrieben. row und
+        column dürfen null sein. Die Methode liefert den alten Wert an dieser
+        Position oder null, wenn dort noch keiner stand.
+    V get(T row, U col) liefert den Wert in Zeile row, Spalte column.Wenndort
+        kein Wert eingetragen ist, ist das Ergebnis null.
+    int size() liefert die Anzahl der Einträge in der ganzen Datenstruktur.
+    int size(T row) liefert die Anzahl der Einträge in Zeile row oder 0, wenn die
+        Zeile nicht existiert.
+    boolean contains(T row, U col) gibt Auskunft, ob in Zeile row, Spalte
+        column ein Wert eingetragen ist (true) oder nicht (false).
+    Set<T> keySet() liefert die Menge der Zeilenschlüssel.
+    Set<U> keySet(T row) liefert die Menge der Spaltenschlüssel in Zeile row
+    oder null, wenn der Zeilenschlüssel nicht existiert.
+Begründen Sie, warum zusätzlich zu diesen Methoden die weiteren Methoden int
+size(U column) und Set<V> keySet(U column) nicht definiert werden
+können. Implementieren Sie das Interface in einer konkreten Klasse TrueMap2.
+------------------------------------------------------------------------------------------------
+13d. Permutationen
+Definieren Sie eine generische Klasse Permutations<T>, deren Konstruktor
+eine Anzahl Argumente vom Typ T akzeptiert. Permutations implementiert
+eine Methode generate, die nacheinander alle Permutationen der Argumente
+erzeugt.
+Definieren Sie weiter ein Interface Receiver mit einer Methode
+    void receive(List<T> args)
+Die Methode generate erhält als Argument ein Receiver-Objekt und ruft mit
+jeder generierten Permutation dessen receive-Methode auf.
+Das Beispielprogramm
+    Permutations<Integer> nums = new Permutations<>(1, 2, 3);
+    nums.generate(new Receiver<Integer>() {
+        public void receive(List<Integer> permutation) {
+            System.out.println(permutation);
+        }
+    });
+gibt aus:
+    [1,2,3]
+    [1,3,2]
+    [2,1,3]
+    [2,3,1]
+    [3,1,2]
+    [3,2,1]
+------------------------------------------------------------------------------------------------
+13e. Kombinationen
+Definieren Sie entsprechend zur vorhergehenden Aufgabe eine generische
+Klasse Combinations<T>. Der Konstruktor erwartet als erstes Argument
+einen positiven Zähler n und weiter eine Anzahl Argumente vom Typ T.
+Die Methode generate generiert alle Kombinationen von n Exemplaren der
+weiteren Konstruktorargumente. Wie bei Permutations erwartet generate ein
+Receiver-Objekt und ruft mit jeder generierten Kombination dessen Methode
+receive auf.
+Das Beispielprogramm
+    Combinations<String> foobar = new Combinations<>(3, "foo", "bar");
+    foobar.generate(new Receiver<String>() {
+        public void receive(List<String> combination) {
+            System.out.println(combination);
+        }
+    });
+gibt alle Kombinationen von drei Exemplaren der Strings "foo" und "bar"
+aus:
+    [foo, foo, foo]
+    [foo, foo, bar]
+    [foo, bar, foo]
+    [foo, bar, bar]
+    [bar,foo,foo]
+    [bar,foo,bar]
+    [bar, bar, foo]
+    [bar, bar, bar]
+------------------------------------------------------------------------------------------------
+13f. Physikalische Größen
+Viele Programme arbeiten mit physikalischen Größen. Dabei werden zwar
+Beträge verarbeitet, aber deren Einheiten implizit unterstellt. Generische
+Klassen erlauben eine elegante Lösung.
+Schreiben Sie ein Interface Unit für physikalische Einheiten. Unit definiert
+zwei sMethoden:
+    String toString() liefert eine Textdarstellung der Einheit, zum Beispiel m
+        für Meter, km für Kilometer oder mm für Millimeter.
+    double baseUnits() liefert die Anzahl Basiseinheiten dieser Einheit.
+        Basiseinheit für Längen ist beispielsweise 1 Meter, für Zeit
+        1 Sekunde. Die Methode liefert zum Beispiel 1000 für die Einheit
+        "Kilometer", 0.001 für die Einheit "Millimeter", 1 für die Einheit
+        "Meter" selbst oder 86400 für die Einheit "Tag".
+Definieren Sie zwei Klassen Length und Time für allgemeine Längen- und
+Zeiteinheiten.
+Definieren Sie ein paar konkrete Klassen für Längeneinheiten mit der
+Basiseinheit Meter, wie zum Beispiel Millimeter, Meter, Meile und Lichtjahr.
+Definieren Sie entsprechend ein paar Klassen für Zeiteinheiten
+mit der Basiseinheit Sekunde, wie zum Beispiel Mikrosekunde, Sekunde,
+Stunde, Tag und Jahr. Das lässt sich gut mit Aufzählungstypen realisieren.
+Definieren Sie jetzt eine generische Klasse Quantity, die eine physikalische
+Größe aus Betrag und Einheit repräsentiert. Der Betrag ist ein
+schlichter double-Wert, die Einheit eine Typvariable. Die Klasse ist
+unveränderlich und braucht Getter, aber keine Setter. Außerdem ist die
+Methode toString praktisch. Natürlich kommt nicht jedes Typargument
+infrage. Schränken Sie die Typvariable passend ein.
+Schreiben Sie eine Anwendung, die die Größen "1500 m", "2 Meilen" und
+"2·10^12 Lichtjahre", "¼ Stunde", "3 Tage" und "2½ Jahre" definiert
+und ausgibt.
+Definieren Sie in der Klasse Quantity eine Methode add, die zwei Größen
+addiert und das Ergebnis in einem neuen Objekt zurückliefert.
+Selbstverständlich können zum Beispiel Längen und Zeiten nicht addiert werden.
+Definieren Sie in der Klasse Quantity eine Methode to, die eine Größe
+in eine andere Einheit umrechnet. Dabei können nur passende Einheiten
+benutzt werden.
+Leiten Sie von Unit eine generische Klasse Ratio ab, die ein Verhältnis
+zweier Einheiten repräsentiert, wie zumBeispiel Geschwindigkeit als
+Verhältnis von Länge zu Zeit. Die beiden Einheiten sind Typvariablen von
+Ratio.
+Definieren Sie im Hauptprogramm Objekte für die Geschwindigkeiten
+"km/h" und "Meilen/Tag". Definieren Sie damit die Geschwindigkeiten
+"60 km/h" und "200 Meilen/Tag". Addieren sie beide und geben Sie das
+Ergebnis aus.
+Definieren Sie in der Klasse Quantity eine Methode per, die eine andere
+Größe als Parameter akzeptiert und das Verhältnis der eigenen zur
+anderen Größe zurückliefert. Berechnen Sie die Geschwindigkeit eines
+Ferienfliegers, der 2400 Meilen in 4 Stunden zurücklegt. Geben Sie die
+Geschwindigkeit in "m/s" aus.
