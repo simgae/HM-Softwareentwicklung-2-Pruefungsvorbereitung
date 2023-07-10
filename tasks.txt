@@ -204,23 +204,6 @@ ab, dass er jede Fehleingabe des Benutzers abfängt, eine passende Meldung
 ausgibt und dann weiterläuft. Der Bruchrechner darf keinesfalls abstürzen
 oder ohne das entsprechende Kommando beendet werden.
 ------------------------------------------------------------------------------------------------
-12a. Effizienz von Listenoperationen
-Schreiben Sie ein Testprogramm, das die Effizienz von ArrayList und
-LinkedList gegenüberstellt. Vergleichen Sie folgende Operationen für ein
-hinreichend großes N, wie zum Beispiel 50000:
-Anfügen von N Elementen an das Ende;
-Einschieben von N Elementen am Anfang;
-sequenzieller Zugriff auf jedes der N Elemente über den Index;
-sequenzieller Zugriff auf jedes der N Elemente über einen Iterator;
-N-maliges Löschen des jeweils ersten Elementes über den Index;
-N-maliges Löschen des jeweils ersten Elementes über einen Iterator.
-Die Laufzeit eines Codefragmentes kann folgendermaßen bestimmt werden:
-    long start = System.currentTimeMillis();
-    /*
-    ... Code, dessen Laufzeit gemessen werden soll ...
-    */
-    System.out.println(System.currentTimeMillis() - start);
-------------------------------------------------------------------------------------------------
 12b. Netze
 Ein Netzwerk besteht aus Knoten, die mit Kanten verknüpft sind. Jeder Knoten
 hat einen Namen, der in einem String gespeichert ist. Kanten sind
@@ -256,48 +239,6 @@ und g verbunden sind. Der Knoten e muss mit sich selbst verbunden sein.
 Entfernen Sie dann die Kante cf und testen Sie erneut die Verbindung
 von a und g.
 Hinweis: Ein Visitor leistet hier gute Dienste.
-------------------------------------------------------------------------------------------------
-12c. ZweidimensionaleMaps
-Die Maps im Package java.util bilden Elemente des Schlüsseltyps auf
-Elemente des Wertetyps ab. Zur Vereinfachung wird in dieser Aufgabe als
-Schlüssel- und Wertetyp nur String benutzt. Der Typ StringMap2 bildet
-jeweils zwei Schlüssel-Strings auf einen Wertestring ab. Er funktioniert wie
-eine Art "zweidimensionaler" Map, vergleichbar mit einem zweidimensionalen
-Array. Die Schlüssel-Strings werden im Folgenden als "Zeilen-" und
-"Spaltenschlüssel" bezeichnet, obwohl diese Bezeichnung technisch keine
-Bedeutung hat. Zum Beispiel könnte der Zeilenschlüssel ein Studentenname,
-der Spaltenschlüssel ein Prüfungsfach und der Wert eine Note sein:
-                        Raketenbau  Lyrik   Finanzmathematik
-    Daniel Düsentrieb   1.3         3.7
-    Micky Mouse                             5
-    Minnie Mouse                    1.7     -
-    Dagobert Duck       4.0                 1.0
-
-    Daniel Düsentrieb, Raketenbau => 1.3
-    Daniel Düsentrieb, Lyrik => 3.7
-    Micky Mouse, Finanzmathematik => 5
-    Minnie Mouse, Lyrik => 1.7
-    Minnie Mouse, Finanzmathematik => -
-    Dagobert Duck, Raketenbau => 4.0
-    Dagobert Duck, Finanzmathematik => 1.0
-Das Interface definiert die folgenden Methoden:
-    String put(String row, String column, String value) Fügt value in
-        Zeile row,
-        Spalte column ein. Wenn dort schon ein Wert stand, wird er
-        überschrieben. row und column dürfen null sein. Liefert den alten Wert an
-        dieser Position oder null, wenn dort noch keiner stand.
-    String get(String row, String col) Liefert den Wert in Zeile row, Spalte
-        column. Wenn dort kein Wert eingetragen ist, ist das Ergebnis null.
-    int size() Liefert die Anzahl der Einträge in der ganzen Datenstruktur.
-    int size(String row) Liefert die Anzahl der Einträge in Zeile row oder 0,
-        wenn die Zeile nicht existiert.
-    boolean contains(String row, String col) Gibt Auskunft, ob in Zeile row,
-        Spalte column ein Wert eingetragen ist (true) oder nicht (false).
-    SetString keySet() Liefert die Menge der Zeilenschlüssel.
-    SetString keySet(String row) Liefert die Menge der Spaltenschlüssel in
-        Zeile row oder null, wenn der Zeilenschlüssel nicht existiert.
-Definieren Sie das Interface und implementieren Sie es dann in der
-konkreten Klasse TrueStringMap2.
 ------------------------------------------------------------------------------------------------
 12d. String-Iterator
 Definieren Sie eine Klasse StringChars, die die einzelnen Zeichen eines
