@@ -23,8 +23,8 @@ import java.util.Objects;
  */
 public class Pair <T, U>{
 
-    private final T fstElement;
-    private final U sndElement;
+    private T fstElement;
+    private U sndElement;
 
 
     public Pair (T fstElement, U sndElement){
@@ -56,6 +56,14 @@ public class Pair <T, U>{
     @Override
     public int hashCode() {
         return Objects.hash(fstElement, sndElement);
+    }
+
+    public void setFstElement(T fstElement) {
+        this.fstElement = fstElement;
+    }
+
+    public void setSndElement(U sndElement) {
+        this.sndElement = sndElement;
     }
 }
 
