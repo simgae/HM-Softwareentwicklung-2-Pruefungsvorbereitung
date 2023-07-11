@@ -39,7 +39,6 @@ public class FileWatcher {
 
 
     public void detectChanges(){
-
         List<File> files = getAllFiles(start);
 
         List<Pair<File, FileTime>> information = files.stream()
@@ -58,15 +57,14 @@ public class FileWatcher {
                     .filter(n -> {
                         try {
                             return !n.getSndElement().equals(Files.getLastModifiedTime(n.getFstElement().toPath()));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException ignored) {
                         }
+                        return false;
                     })
                     .peek(n -> {
                         try {
                             n.setSndElement(Files.getLastModifiedTime(n.getFstElement().toPath()));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        } catch (IOException ignored) {
                         }
                     })
                     .forEach(System.out::println);
@@ -79,8 +77,10 @@ public class FileWatcher {
 
 class Testing{
     public static void main(String[] args) {
+
         FileWatcher fileWatcher = new FileWatcher(Path.of(args[0]));
         fileWatcher.detectChanges();
+
 
     }
 }
