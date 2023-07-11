@@ -240,24 +240,6 @@ Entfernen Sie dann die Kante cf und testen Sie erneut die Verbindung
 von a und g.
 Hinweis: Ein Visitor leistet hier gute Dienste.
 ------------------------------------------------------------------------------------------------
-13b. Paare
-Manche Methoden sollten zwei Werte als Ergebnis an den Aufrufer zurückliefern.
-Denken Sie beispielsweise an den Elementzugriff in einer Map mit
-der Methode get. Wenn kein Eintrag in der Map gefunden wird, liefert get
-den Fluchtwert null. Allerdings kann null auch der Wert eines regulären
-Eintrages sein. Um den Unterschied zu erkennen, muss noch die Methode
-containsKey aufgerufen werden.
-Alternativ könnte eine einzige Zugriffsmethode zwei Werte zusammen
-zurückliefern, ein Erfolgssignal und einen Wert (der nur bei einem positiven
-Erfolgssignal von Bedeutung ist). Allerdings können Methoden in Java
-nur einen Wert liefern.
-In diesem Fall ist eine unveränderliche Klasse Pair nützlich, die zwei Werte
-zusammenschnürt. Die Typen der beiden gebündelten Werte sind unabhängig,
-deshalb wird Pair eine generische Klasse mit zwei Typparametern T
-und U sein. Neben dem Konstruktor reichen zwei Getter und die Methoden
-toString, equals und hashCode aus.
-Definieren Sie die generische Klasse Pair.
-------------------------------------------------------------------------------------------------
 13c. ZweidimensionaleMaps, reloaded
 In einer früheren Aufgabe (Seite 401) wurde eine Map entwickelt, die zwei
 Strings auf einen dritten abbildet. Verallgemeinern Sie diese Lösung zu
