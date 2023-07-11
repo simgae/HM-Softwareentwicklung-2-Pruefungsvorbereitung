@@ -55,9 +55,17 @@ public class CharacterFrequencyReader extends FilterReader {
 
     @Override
     public String toString() {
-        return "CharacterFrequencyReader{" +
-                "analytics=" + analytics +
-                '}';
+
+        String result = "";
+
+        int amountOfCharacter = analytics.values().stream().mapToInt(Integer::intValue).sum();
+
+        for (Map.Entry<Character, Integer> entry : analytics.entrySet()){
+            if(entry.getKey() != '\n')
+                result += entry.getKey() + " \t | " + entry.getValue() + "\t | " + (double)(entry.getValue() / amountOfCharacter)*100 + "\t |\n";
+        }
+
+        return result;
     }
 }
 
