@@ -240,19 +240,6 @@ Entfernen Sie dann die Kante cf und testen Sie erneut die Verbindung
 von a und g.
 Hinweis: Ein Visitor leistet hier gute Dienste.
 ------------------------------------------------------------------------------------------------
-12e. Collatz-Iterator
-Die Collatzfolge ist auf Seite 82 beschrieben. Definieren Sie eine Klasse
-Collatz, deren Konstruktor eine Startzahl als Argument erhält. Collatz-
-Objekte sollen mit foreach-Schleifen durchlaufen werden können und dabei
-nacheinander die Zahlen der Folge liefern. Eine 1 ist das letzte Element
-einer Collatzfolge. Das Codefragment
-    for(int i: new Collatz(6))
-        System.out.println(i);
-gibt aus
-    6, 3, 10, 5, 16, 8, 4, 2, 1
-Beachten Sie, dass mehrere Iteratoren gleichzeitig dasselbe Collatz-Objekt
-durchlaufen können.
-------------------------------------------------------------------------------------------------
 13b. Paare
 Manche Methoden sollten zwei Werte als Ergebnis an den Aufrufer zurückliefern.
 Denken Sie beispielsweise an den Elementzugriff in einer Map mit
