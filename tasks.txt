@@ -265,30 +265,6 @@ Begründen Sie, warum zusätzlich zu diesen Methoden die weiteren Methoden int
 size(U column) und Set<V> keySet(U column) nicht definiert werden
 können. Implementieren Sie das Interface in einer konkreten Klasse TrueMap2.
 ------------------------------------------------------------------------------------------------
-13d. Permutationen
-Definieren Sie eine generische Klasse Permutations<T>, deren Konstruktor
-eine Anzahl Argumente vom Typ T akzeptiert. Permutations implementiert
-eine Methode generate, die nacheinander alle Permutationen der Argumente
-erzeugt.
-Definieren Sie weiter ein Interface Receiver mit einer Methode
-    void receive(List<T> args)
-Die Methode generate erhält als Argument ein Receiver-Objekt und ruft mit
-jeder generierten Permutation dessen receive-Methode auf.
-Das Beispielprogramm
-    Permutations<Integer> nums = new Permutations<>(1, 2, 3);
-    nums.generate(new Receiver<Integer>() {
-        public void receive(List<Integer> permutation) {
-            System.out.println(permutation);
-        }
-    });
-gibt aus:
-    [1,2,3]
-    [1,3,2]
-    [2,1,3]
-    [2,3,1]
-    [3,1,2]
-    [3,2,1]
-------------------------------------------------------------------------------------------------
 13e. Kombinationen
 Definieren Sie entsprechend zur vorhergehenden Aufgabe eine generische
 Klasse Combinations<T>. Der Konstruktor erwartet als erstes Argument
