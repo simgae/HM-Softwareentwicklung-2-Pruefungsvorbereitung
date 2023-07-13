@@ -148,56 +148,6 @@ new HeadOver(ms)
 Insgesamt ergibt sich folgende Struktur (Besides wie Above, Tilt und HeadOver
 wie Framed):
 ------------------------------------------------------------------------------------------------
-10g. Zahlenfolgen
-Schreiben Sie ein Java-Programm, das Zahlenfolgen modelliert. Zur
-Vereinfachung werden nur Folgen ganzer Zahlen betrachtet.
-Definieren Sie eine abstrakte Basisklasse Sequence für allgemeine
-Zahlenfolgen. Sequence hat nur zwei Methoden:
-    hasNext gibt Auskunft, ob diese Folge noch weitere Elemente enthält
-        (true) oder nicht (false).
-    next liefert das nächste Element der Folge. Darf nur dann aufgerufen
-        werden, wenn hasNext das Ergebnis true geliefert hat.
-Die natürlichen Zahlen (1, 2, 3, . . . ) sind eine konkrete Zahlenfolge. Leiten
-Sie die Klasse Naturals von Sequence ab. Der erste Aufruf von next liefert
-1, der nächste 2,dann 3 und so weiter. hasNext liefert hier immer true.
-Die Klasse Range repräsentiert die natürlichen Zahlen in einem bestimmten
-Intervall. Der Konstruktor von Range erwartet zwei Argumente, den
-Anfang und das Ende des Intervalls. Der erste Parameter nennt die erste
-Zahl im Intervall, der zweite Parameter die erste Zahl hinter dem Intervall.
-Zum Beispiel enthält die Folge Range(5, 10) dieZahlen5,6,7,8und9,
-aber nicht mehr 10. Die Folge Range(5, 5) ist leer.
-Definieren Sie an passender Stelle eine Methode print, die bis zu 10 Elemente
-einer beliebigen Folge ausgibt. Wenn die Folge bloß 10 oder weniger Elemente
-hat, wird anschließend das Wort end ausgegeben, ansonsten "more".
-Ein "Filter" ist eine Zahlenfolge, die keine eigene Zahlenquelle enthält.
-Ein Filter "ernährt" sich stattdessen von einer anderen Zahlenfolge, deren
-Elemente er entweder durchlässt oder absorbiert. Welche Zahlen ein Filter
-passieren lässt, legen erst konkrete Filterklassen fest.
-Definieren Sie einen Typ Filter. Die Bedingung zum Schlucken oder
-Durchlassen von Zahlen bleibt hier noch offen, deshalb ist Filter keine
-konkrete Klasse.
-Definieren Sie den Filter Evens, der gerade Zahlen weitergibt und ungerade
-Zahlen entfernt. Zum Beispiel liefert
-    new Evens(new Naturals()) ==> 2, 4, 6, ...
-Welche Zahlen enthält die nächste Folge?
-    new Evens(new Range(5, 10)) ==> ?
-Definieren Sie einen Filter ZapMultiples. Dessen Konstruktor erwartet eine
-Basiszahl. Der Filter absorbiert alle ganzzahligen Vielfachen der Basiszahl
-und gibt den Rest weiter. Zum Beispiel ergibt
-    new ZapMultiples(new Naturals(), 3) ==> 1, 2, 4, 5, 7, 8, 10, ...
-Alle Vielfachen von 3 fehlen. Welche Zahlen erzeugt diese Folge?
-    new ZapMultiples(new Evens(new Range(5, 10)), 2) ==> ?
-Die nächste Folge hat ein Problem. Können Sie es ohne Hilfe eines Programms
-vorhersagen?
-    new ZapMultiples(new Evens(new Naturals()), 2)
-Das Sieb des Eratosthenes ist ein Algorithmus zur Berechnung von Primzahlen:
-1. Nimm die natürlichen Zahlen und entferne die 1.
-2. Gib die erste Zahl p desRestesaus. p ist eine Primzahl.
-3. Entferne p und alle Vielfachen aus der Folge.
-4. Zurück zu Schritt 2.
-Implementieren Sie das Sieb des Eratosthenes mit den vorher definierten
-Klassen.
-------------------------------------------------------------------------------------------------
 11a. Unzerstörbarer Bruchrechner
 Sichern Sie den Bruchrechner von Aufgabe 5a (Seite 205) mit Exceptions so
 ab, dass er jede Fehleingabe des Benutzers abfängt, eine passende Meldung
